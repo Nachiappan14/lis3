@@ -20,12 +20,20 @@ public class SampleBean {
 	 private String technician_id;
 	 private String station_id;
 	 private LocalDate date;
-	 
-	 public SampleBean()
+	 private String observations;
+	 public String getObservations() {
+		return observations;
+	}
+
+	public void setObservations(String observations) {
+		this.observations = observations;
+	}
+
+	public SampleBean()
 	    {
 	    }
 	 
-		public SampleBean(String sample_id, String test_id,String uid, String technician_id, String station_id, LocalDate ld) 
+		public SampleBean(String sample_id, String test_id,String uid, String technician_id, String station_id, LocalDate ld,String observations) 
 		{
 			this.sample_id=sample_id;
 			this.test_id=test_id;
@@ -33,6 +41,7 @@ public class SampleBean {
 			this.technician_id=technician_id;
 			this.station_id=station_id;
 			this.date=ld;
+			this.observations=observations;
 			
 		}
 

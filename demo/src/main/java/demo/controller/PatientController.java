@@ -41,7 +41,7 @@ public class PatientController {
 //    	if any of the attribute is empty
 //    	if uid is unique
 //    	if date is proper : todo
-    	if(patientBean.getUid()==null || patientBean.getPatient_firstname()==null || patientBean.getPatient_middlename()==null || patientBean.getPatient_lastname()==null || patientBean.getPatient_email()==null || patientBean.getPatient_contactnumber()==null || patientBean.getPatient_address()==null || patientBean.getPatient_city()==null || patientBean.getPatient_state()==null || patientBean.getPatient_pincode()==null || patientBean.getPatient_referencehospital()==null || patientBean.getPatient_referedby()==null || patientBean.getPatient_hospitalpatientid()==null || patientBean.getTest_id()==null)
+    	if(patientBean.getUid()==null || patientBean.getPatient_firstname()==null || patientBean.getPatient_middlename()==null || patientBean.getPatient_lastname()==null || patientBean.getPatient_email()==null || patientBean.getPatient_contactnumber()==null || patientBean.getPatient_address()==null || patientBean.getPatient_city()==null || patientBean.getPatient_state()==null || patientBean.getPatient_pincode()==null ||  patientBean.getTest_id()==null)
     	{
     		patient.setMessage("Partial filled form");
     		patient.setStatus(0);
