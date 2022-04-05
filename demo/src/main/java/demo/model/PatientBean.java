@@ -2,26 +2,30 @@ package demo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.Date;
 
 @Entity
 @Table(name="patient")
 public class PatientBean {
 	@Id
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	@Column(name="uid")
     private String uid;
-	private String test_id;
+	private String test_name;
     private String patient_firstname;
     private String patient_middlename;
     private String patient_lastname;
 //    gender
     private Gender patient_gender;
     ///dob
-    private Date patient_dob;
+    private String patient_dob;
     private String patient_email;
     private String patient_contactnumber;
     private String patient_address;
@@ -36,12 +40,11 @@ public class PatientBean {
     public PatientBean()
     {
     }
-	public PatientBean(String uid, String test_id,String patient_firstname, String patient_middlename, String patient_lastname, Gender patient_gender, Date patient_dob,
+	public PatientBean(String test_name,String patient_firstname, String patient_middlename, String patient_lastname, Gender patient_gender, String patient_dob,
 			String patient_email, String patient_contactnumber, String patient_address, String patient_city, String patient_state, String patient_pincode, String patient_referencehospital, String patient_referedby, String patient_hospitalpatientid ) 
 	{
 
-		this.uid=uid;
-		this.test_id=test_id;
+		this.test_name=test_name;
 		this.patient_firstname=patient_firstname;
 		this.patient_middlename=patient_middlename;
 		this.patient_lastname=patient_lastname;
@@ -60,18 +63,17 @@ public class PatientBean {
 		this.patient_hospitalpatientid=patient_hospitalpatientid;
 		
 	}
-	public String getTest_id() {
-		return test_id;
+
+	public String getTest_name() {
+		return test_name;
 	}
-	public void setTest_id(String test_id) {
-		this.test_id = test_id;
+	public void setTest_name(String test_name) {
+		this.test_name = test_name;
 	}
 	public String getUid() {
 		return uid;
 	}
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
+
 	public String getPatient_firstname() {
 		return patient_firstname;
 	}
@@ -98,10 +100,11 @@ public class PatientBean {
 		this.patient_gender = patient_gender;
 	}
 //	dob
-	public Date getPatient_dob() {
+	public String getPatient_dob() {
+		System.out.println(patient_dob);
 		return patient_dob;
 	}
-	public void setPatient_dob(Date patient_dob) {
+	public void setPatient_dob(String patient_dob) {
 		this.patient_dob = patient_dob;
 	}
 	public String getPatient_email() {

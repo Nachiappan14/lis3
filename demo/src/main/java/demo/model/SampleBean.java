@@ -15,7 +15,7 @@ public class SampleBean {
 	@Column(name="sample_id")
 	 private String sample_id;
 //	todo: unique identification of rows
-	 private String test_id;
+	 private String test_name;
 	 private String uid;
 	 private String technician_id;
 	 private String station_id;
@@ -33,10 +33,10 @@ public class SampleBean {
 	    {
 	    }
 	 
-		public SampleBean(String sample_id, String test_id,String uid, String technician_id, String station_id, LocalDate ld,String observations) 
+		public SampleBean(String sample_id, String test_name,String uid, String technician_id, String station_id, LocalDate ld,String observations) 
 		{
 			this.sample_id=sample_id;
-			this.test_id=test_id;
+			this.test_name=test_name;
 			this.uid=uid;
 			this.technician_id=technician_id;
 			this.station_id=station_id;
@@ -45,20 +45,20 @@ public class SampleBean {
 			
 		}
 
+		public String getTest_name() {
+			return test_name;
+		}
+
+		public void setTest_name(String test_name) {
+			this.test_name = test_name;
+		}
+
 		public String getSample_id() {
 			return sample_id;
 		}
 
 		public void setSample_id(String sample_id) {
 			this.sample_id = sample_id;
-		}
-
-		public String getTest_id() {
-			return test_id;
-		}
-
-		public void setTest_id(String test_id) {
-			this.test_id = test_id;
 		}
 
 		public String getUid() {
