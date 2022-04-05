@@ -36,11 +36,12 @@ public class PatientController {
     		patient.setPatientBean(null);
     		return patient;
     	}
-    	System.out.println(patientBean);
+
+
 //    	if any of the attribute is empty
 //    	if uid is unique
 //    	if date is proper : todo
-    	if(patientBean.getUid()==null || patientBean.getPatient_firstname()==null || patientBean.getPatient_middlename()==null || patientBean.getPatient_lastname()==null || patientBean.getPatient_email()==null || patientBean.getPatient_contactnumber()==null || patientBean.getPatient_address()==null || patientBean.getPatient_city()==null || patientBean.getPatient_state()==null || patientBean.getPatient_pincode()==null || patientBean.getPatient_referencehospital()==null || patientBean.getPatient_referedby()==null || patientBean.getPatient_hospitalpatientid()==null)
+    	if(patientBean.getUid()==null || patientBean.getPatient_firstname()==null || patientBean.getPatient_middlename()==null || patientBean.getPatient_lastname()==null || patientBean.getPatient_email()==null || patientBean.getPatient_contactnumber()==null || patientBean.getPatient_address()==null || patientBean.getPatient_city()==null || patientBean.getPatient_state()==null || patientBean.getPatient_pincode()==null || patientBean.getPatient_referencehospital()==null || patientBean.getPatient_referedby()==null || patientBean.getPatient_hospitalpatientid()==null || patientBean.getTest_id()==null)
     	{
     		patient.setMessage("Partial filled form");
     		patient.setStatus(0);
@@ -48,21 +49,24 @@ public class PatientController {
     		return patient;
     	}
 
-    	
     	Optional<PatientBean> patientBean1=this.patientRepository.findByuid(patientBean.getUid());
     	if(patientBean1.isEmpty()==false)
+//    	if(patientBean1!=null)
     	{
     		patient.setMessage("already uid exists");
     		patient.setStatus(0);
         	patient.setPatientBean(null);
         	return patient;
     	}
-    	PatientBean patientBean2=patientBean1.get();
+    	else
+    	{
+    	PatientBean patientBean2=patientBean;
     	patient.setMessage("success");
 		patient.setStatus(1);
     	patient.setPatientBean(patientBean2);
     	this.patientRepository.save(patientBean2);
     	return patient;
+    	}
 	    	
     }
 }

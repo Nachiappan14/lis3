@@ -26,6 +26,7 @@ import demo.repository.SampleRepository;
 public class SampleController {
 	@Autowired
 	private SampleRepository sampleRepository;
+	@Autowired
 	private PatientRepository patientRepository;
     @GetMapping("/samples")
     public List<SampleBean> getSamples(){
@@ -33,31 +34,20 @@ public class SampleController {
     }
     
     @PostMapping("/createsample")
-    public Sample createSample(@RequestBody SampleBean sampleBean)
+    public Sample createSample(@RequestBody String uid)
     {
-    	Sample sample=new Sample();
-//    	have to generate sample_id from uid and date
-//    	have to check if any attributes are empty
-    	if(sampleBean==null)
-    	{
-    		sample.setMessage("Empty samples");
-    		sample.setStatus(0);
-    		sample.setSampleBean(null);
-    		return sample;
-    	}
-    	if(sampleBean.getTest_id()==null || sampleBean.getUid()==null || sampleBean.getTechnician_id()==null || sampleBean.getStation_id()==null || sampleBean.getDate()==null)
-    	{
-    		sample.setMessage("partial filled sample form");
-    		sample.setStatus(0);
-    		sample.setSampleBean(null);
-    		return sample;
-    	}
-    	sampleBean.setSample_id(sampleBean.getDate()+ sampleBean.getUid());
-    	sample.setMessage("success");
-		sample.setStatus(1);
-		sample.setSampleBean(sampleBean);
-		this.sampleRepository.save(sampleBean);
-		return sample;
+    	System.out.println(uid);
+       Optional<PatientBean> p=this.patientRepository.findByuid(uid);
+       PatientBean patient=p.get();
+       LocalDate ld=LocalDate.now();
+       String sub=String.valueOf(ld)+uid;
+	   SampleBean sampleBean=new SampleBean(sub,patient.getTest_id(),uid,"1","1",ld);
+	   Sample sample=new Sample();
+       sample.setMessage("success");
+	   sample.setStatus(1);
+	   sample.setSampleBean(sampleBean);
+	   this.sampleRepository.save(sampleBean);
+	   return sample;
     }
     
     @PostMapping("/createsubsample")
@@ -66,7 +56,8 @@ public class SampleController {
     	for(int i=1;i<=subSampleBean.getNumber();i++)
     	{
     		String sub=subSampleBean.getSample_id()+"."+String.valueOf(i);
-    		Optional<SampleBean> sampleBean1=this.sampleRepository.findById(subSampleBean.getSample_id());
+    		Optional<SampleBean> s1=this.sampleRepository.findById(subSampleBean.getSample_id());
+    		SampleBean sampleBean1=s1.get();
     		SampleBean subsample=new SampleBean(sub,sampleBean1.getTest_id(),sampleBean1.getUid(),subSampleBean.getTechnician_id(),subSampleBean.getStation_id(),subSampleBean.getDate());
     		this.sampleRepository.save(subsample);
     		Sample sample=new Sample();

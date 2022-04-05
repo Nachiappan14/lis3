@@ -23,11 +23,11 @@ public class PatientBean {
     ///dob
     private Date patient_dob;
     private String patient_email;
-    private Integer patient_contactnumber;
+    private String patient_contactnumber;
     private String patient_address;
     private String patient_city;
     private String patient_state;
-    private Integer patient_pincode;
+    private String patient_pincode;
     private String patient_referencehospital;
     private String patient_referedby;
     private String patient_hospitalpatientid;
@@ -37,8 +37,9 @@ public class PatientBean {
     {
     }
 	public PatientBean(String uid, String test_id,String patient_firstname, String patient_middlename, String patient_lastname, Gender patient_gender, Date patient_dob,
-			String patient_email, Integer patient_contactnumber, String patient_address, String patient_city, String patient_state, Integer patient_pincode, String patient_referencehospital, String patient_referedby, String patient_hospitalpatientid ) 
+			String patient_email, String patient_contactnumber, String patient_address, String patient_city, String patient_state, String patient_pincode, String patient_referencehospital, String patient_referedby, String patient_hospitalpatientid ) 
 	{
+
 		this.uid=uid;
 		this.test_id=test_id;
 		this.patient_firstname=patient_firstname;
@@ -59,14 +60,14 @@ public class PatientBean {
 		this.patient_hospitalpatientid=patient_hospitalpatientid;
 		
 	}
-	public String getUid() {
-		return uid;
-	}
-	public String getTestid() {
+	public String getTest_id() {
 		return test_id;
 	}
-	public void setTestid(String test_id) {
+	public void setTest_id(String test_id) {
 		this.test_id = test_id;
+	}
+	public String getUid() {
+		return uid;
 	}
 	public void setUid(String uid) {
 		this.uid = uid;
@@ -104,15 +105,16 @@ public class PatientBean {
 		this.patient_dob = patient_dob;
 	}
 	public String getPatient_email() {
+		System.out.println("getting mail"+patient_email);
 		return patient_email;
 	}
 	public void setPatient_email(String patient_email) {
 		this.patient_email= patient_email;
 	}
-	public Integer getPatient_contactnumber() {
+	public String getPatient_contactnumber() {
 		return patient_contactnumber;
 	}
-	public void setPatient_contactnumber(Integer patient_contactnumber) {
+	public void setPatient_contactnumber(String patient_contactnumber) {
 		this.patient_contactnumber = patient_contactnumber;
 	}
 	public String getPatient_address() {
@@ -133,10 +135,10 @@ public class PatientBean {
 	public void setPatient_state(String patient_state) {
 		this.patient_state= patient_state;
 	}
-	public Integer getPatient_pincode() {
+	public String getPatient_pincode() {
 		return patient_pincode;
 	}
-	public void setPatient_pincode(Integer patient_pincode) {
+	public void setPatient_pincode(String patient_pincode) {
 		this.patient_pincode = patient_pincode;
 	}
 	public String getPatient_referencehospital() {
