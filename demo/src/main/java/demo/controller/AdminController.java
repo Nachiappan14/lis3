@@ -1,6 +1,7 @@
 package demo.controller;
 
 import java.util.List;
+//import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +104,10 @@ public class AdminController {
     	}	
     	reply.setMessage("Success");
     	reply.setStatus(1);
+    	
+//    	SCryptPasswordEncoder encoder=new SCryptPasswordEncoder();
+//    	user.setTechnician_password(encoder.encode(user.getTechnician_password()));
+    	
     	reply.setUser(user);
     	this.userRepository.save(user);
       	return reply;	

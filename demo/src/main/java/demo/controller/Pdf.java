@@ -22,7 +22,7 @@ public class Pdf{
     private void writeTableHeader(PdfPTable table) {
         PdfPCell cell = new PdfPCell();
         cell.setBackgroundColor(Color.BLUE);
-        cell.setPadding(5);
+        cell.setPadding(2);
          
         Font font = FontFactory.getFont(FontFactory.HELVETICA);
         font.setColor(Color.WHITE);
@@ -57,7 +57,7 @@ public class Pdf{
          
         document.add(p);
          
-        PdfPTable table = new PdfPTable(5);
+        PdfPTable table = new PdfPTable(2);
         table.setWidthPercentage(100f);
         table.setWidths(new float[] {1.5f, 3.5f});
         table.setSpacingBefore(10);

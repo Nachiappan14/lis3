@@ -13,8 +13,8 @@ import javax.persistence.Table;
 public class StationBean {
 	@Id
 //	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    private String stationid;
 	@Column(name="stationid")
+    private String stationid;
     private String stationname;
     
     public StationBean()

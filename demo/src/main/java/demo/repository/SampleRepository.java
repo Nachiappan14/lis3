@@ -10,8 +10,11 @@ import demo.model.SampleBean;
 @Repository
 public interface SampleRepository extends JpaRepository<SampleBean,String>{
 	Optional<SampleBean> findByuid(String sample_id);
-
+    
 	@Query(value = "SELECT * FROM sample s WHERE s.station_id=:station_id",nativeQuery=true)
 	List<SampleBean> getbystationid(@Param("station_id")String station_id);
-	}
+	@Query(value = "SELECT * FROM sample s WHERE s.uid=:uid",nativeQuery=true)
+	List<SampleBean> getbypatientid(@Param("uid")String station_id);
+
+}
 

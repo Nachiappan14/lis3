@@ -57,6 +57,7 @@ public class UserController {
 	    		reply.setStatus(1);
 	    		reply.setUser(user);
 	    		reply.setToken("dummy");
+//	    		this.userRepository.save(user);
 	    		return reply;
 	    	}
     	}

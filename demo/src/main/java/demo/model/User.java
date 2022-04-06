@@ -18,7 +18,7 @@ public class User {
     private String technicianname;
     private String technician_password;
     private String technician_email;
-    private Integer technician_contactnumber;
+    private String technician_contactnumber;
     private Integer technician_age;
     private String technician_gender;
     private Integer role_reception;
@@ -33,7 +33,7 @@ public class User {
     {
     }
 	public User(String technician_id, String technicianname, String technician_password, String technician_email, 
-			Integer technician_contactnumber, Integer technician_age, String technician_gender,Integer role_reception,
+			String technician_contactnumber, Integer technician_age, String technician_gender,Integer role_reception,
 			Integer role_grossing, Integer role_analyzing, Integer role_reporting, Integer role_admin, Integer role_doctor) {
 		this.technician_id=technician_id;
 		this.technicianname=technicianname;
@@ -43,6 +43,8 @@ public class User {
 		this.technician_age=technician_age;
 		this.technician_gender=technician_gender;
 		this.role_reception=role_reception;
+		
+		
 		this.role_grossing=role_grossing;
 		this.role_analyzing=role_analyzing;
 		this.role_reporting=role_reporting;
@@ -74,10 +76,10 @@ public class User {
 	public void setTechnician_email(String technician_email) {
 		this.technician_email = technician_email;
 	}
-	public Integer getTechnician_contactnumber() {
+	public String getTechnician_contactnumber() {
 		return technician_contactnumber;
 	}
-	public void setTechnician_contactnumber(Integer technician_contactnumber) {
+	public void setTechnician_contactnumber(String technician_contactnumber) {
 		this.technician_contactnumber = technician_contactnumber;
 	}
 	public Integer getTechnician_age() {

@@ -3,16 +3,31 @@ package demo.controller;
 //import java.sql.Date;
 import java.util.Date;
 import java.io.IOException;
+import java.net.PasswordAuthentication;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
+import javax.mail.Message;
+
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +40,9 @@ import com.lowagie.text.DocumentException;
 import demo.model.ObservationBean;
 import demo.model.PatientBean;
 import demo.model.Report;
+import demo.model.ReportReply;
 import demo.model.SampleBean;
+import demo.model.SampleList;
 import demo.model.Sample;
 import demo.model.SubSampleBean;
 import demo.repository.ReportRepository;
@@ -42,6 +59,7 @@ public class SampleController {
 	private PatientRepository patientRepository;
 	@Autowired
 	private ReportRepository reportRepository;
+
     @GetMapping("/samples")
     public List<SampleBean> getSamples(){
     	return this.sampleRepository.findAll();
@@ -130,24 +148,46 @@ public class SampleController {
         	return sample;
         	
     }
+    
     @PostMapping("/generatereport")
-    public void generatereport(@RequestBody String sample_id)
+    public ReportReply generatereport(@RequestBody String sample_id)
     {
     	String report="";
+    	ReportReply reportReply=new ReportReply();
+//    	if sample_id is null
+    	if(sample_id==null)
+    	{
+    		reportReply.setMessage("sample_id is null");
+    		reportReply.setStatus(0);
+    		reportReply.setReport(null);
+    		return reportReply;
+    	}
     	List<SampleBean> arr=getSamples();
     	for(int i=0;i<arr.size();i++)
     	{
-
     		if(arr.get(i).getSample_id().contains(sample_id))
     		{
     			report=report+arr.get(i).getSample_id()+" "+arr.get(i).getObservations()+"\n";
     		}
     	}
+//    	if sample_id is not present
+    	if(report=="")
+    	{
+    		reportReply.setMessage("no match");
+    		reportReply.setStatus(0);
+    		reportReply.setReport(null);
+    		return reportReply;
+    	}
     	Report report1 = new Report();
     	report1.setSample_id(sample_id);
     	report1.setReport(report);
     	this.reportRepository.save(report1);
+    	reportReply.setMessage("success");
+		reportReply.setStatus(1);
+		reportReply.setReport(report1);
+		return reportReply;
     }
+    
     @GetMapping("/generatepdf")
     public void generatepdf(HttpServletResponse response) throws DocumentException, IOException 
 //    public void generatepdf(@RequestBody String sample_id)
@@ -163,8 +203,47 @@ public class SampleController {
         Pdf exporter = new Pdf(listSamples);
         exporter.export(response);
     }
-    
-    
+
+//
+//    private void sendmail() throws AddressException, MessagingException, IOException {
+// 	   Properties props = new Properties();
+// 	   props.put("mail.smtp.auth", "true");
+// 	   props.put("mail.smtp.starttls.enable", "true");
+// 	   props.put("mail.smtp.host", "smtp.gmail.com");
+// 	   props.put("mail.smtp.port", "587");
+// 	   
+// 	   Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+// 	      protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+// 	         return new javax.mail.PasswordAuthentication("lislabinfo2022@gmail.com", "imt2018lis");
+// 	      }
+// 	   });
+// 	   Message msg = new MimeMessage(session);
+// 	   msg.setFrom(new InternetAddress("shreyagoshal0202@gmail.com", false));
+//
+// 	   msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("lislabinfo2022@gmail.com"));
+// 	   msg.setSubject("Tutorials point email");
+// 	   msg.setContent("Tutorials point email", "text/html");
+// 	   msg.setSentDate(new Date());
+
+// 	   MimeBodyPart messageBodyPart = new MimeBodyPart();
+// 	   messageBodyPart.setContent("Tutorials point email", "text/html");
+//
+// 	   Multipart multipart = new MimeMultipart();
+// 	   multipart.addBodyPart(messageBodyPart);
+// 	   MimeBodyPart attachPart = new MimeBodyPart();
+//
+// 	   attachPart.attachFile("/var/tmp/image19.png");
+// 	   multipart.addBodyPart(attachPart);
+// 	   msg.setContent(multipart);
+// 	   Transport.send(msg);   
+// 	}
+
+// 	@RequestMapping(value = "/sendemail")
+// 	public String sendEmail() throws AddressException, MessagingException, IOException {
+// 	   sendmail();
+// 	   return "Email sent successfully";   
+// 	}
+//    
     
 //    @GetMapping("/searchsamplesbystationid")
 //    public void searchbyuid(@RequestBody List<String> lis)
@@ -184,12 +263,32 @@ public class SampleController {
 //    	}
 //    }
     @PostMapping("/searchsamplesbypatientid")
-    public SampleBean searchbypatientid(@RequestBody String uid )
+    public SampleList searchbypatientid(@RequestBody String uid )
     {
     	System.out.println(uid);
     	System.out.println("hello hi");
+    	SampleList sampleList=new SampleList();
 //  null condition
-    	Optional<SampleBean> s= this.sampleRepository.findByuid(uid);
-    	return s.get();
+    	if(uid==null)
+    	{
+    		sampleList.setMessage("uid is null");
+    		sampleList.setStatus(0);
+    		sampleList.setSampleBean(null);
+    		return sampleList;
+    	}
+    	List<SampleBean> sampleBean1= this.sampleRepository.getbypatientid(uid);
+//    	if uid is not found in the repo
+    	if(sampleBean1.isEmpty()==true)
+    	{
+    		sampleList.setMessage("uid not in repo");
+    		sampleList.setStatus(0);
+    		sampleList.setSampleBean(null);
+    		return sampleList;
+    	}
+    	sampleList.setMessage("success");
+    	sampleList.setStatus(1);
+//		SampleBean sampleBean2=sampleBean1.get();
+		sampleList.setSampleBean(sampleBean1);
+		return sampleList;
     }
 }
