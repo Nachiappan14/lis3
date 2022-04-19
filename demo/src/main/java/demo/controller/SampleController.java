@@ -204,46 +204,43 @@ public class SampleController {
         exporter.export(response);
     }
 
-//
-//    private void sendmail() throws AddressException, MessagingException, IOException {
-// 	   Properties props = new Properties();
-// 	   props.put("mail.smtp.auth", "true");
-// 	   props.put("mail.smtp.starttls.enable", "true");
-// 	   props.put("mail.smtp.host", "smtp.gmail.com");
-// 	   props.put("mail.smtp.port", "587");
-// 	   
-// 	   Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-// 	      protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-// 	         return new javax.mail.PasswordAuthentication("lislabinfo2022@gmail.com", "imt2018lis");
-// 	      }
-// 	   });
-// 	   Message msg = new MimeMessage(session);
-// 	   msg.setFrom(new InternetAddress("shreyagoshal0202@gmail.com", false));
-//
-// 	   msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("lislabinfo2022@gmail.com"));
-// 	   msg.setSubject("Tutorials point email");
-// 	   msg.setContent("Tutorials point email", "text/html");
-// 	   msg.setSentDate(new Date());
+    private void sendmail() throws AddressException, MessagingException, IOException {
+ 	   Properties props = new Properties();
+ 	   props.put("mail.smtp.auth", "true");
+ 	   props.put("mail.smtp.starttls.enable", "true");
+ 	   props.put("mail.smtp.host", "smtp.gmail.com");
+ 	   props.put("mail.smtp.port", "587");
+ 	   
+ 	   Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+ 	      protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+ 	         return new javax.mail.PasswordAuthentication("lislabinfo2022@gmail.com", "imt2018lis");
+ 	      }
+ 	   });
+ 	   Message msg = new MimeMessage(session);
+ 	   msg.setFrom(new InternetAddress("lislabinfo2022@gmail.com", false));
 
-// 	   MimeBodyPart messageBodyPart = new MimeBodyPart();
-// 	   messageBodyPart.setContent("Tutorials point email", "text/html");
-//
-// 	   Multipart multipart = new MimeMultipart();
-// 	   multipart.addBodyPart(messageBodyPart);
+ 	   msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("lislabinfo2022@gmail.com"));
+ 	   msg.setSubject("Tutorials point email");
+ 	   msg.setContent("Tutorials point email", "text/html");
+ 	   msg.setSentDate(new Date());
+
+ 	   MimeBodyPart messageBodyPart = new MimeBodyPart();
+ 	   messageBodyPart.setContent("Tutorials point email", "text/html");
+
+ 	   Multipart multipart = new MimeMultipart();
+ 	   multipart.addBodyPart(messageBodyPart);
 // 	   MimeBodyPart attachPart = new MimeBodyPart();
 //
 // 	   attachPart.attachFile("/var/tmp/image19.png");
 // 	   multipart.addBodyPart(attachPart);
-// 	   msg.setContent(multipart);
-// 	   Transport.send(msg);   
-// 	}
+ 	   msg.setContent(multipart);
+ 	   Transport.send(msg);   
+ 	}
 
-// 	@RequestMapping(value = "/sendemail")
-// 	public String sendEmail() throws AddressException, MessagingException, IOException {
-// 	   sendmail();
-// 	   return "Email sent successfully";   
-// 	}
-//    
+ 	@RequestMapping(value = "/sendemail")
+ 	public String sendEmail() throws AddressException, MessagingException, IOException {
+ 	   sendmail();
+ 	   return "Email sent successfully";
     
 //    @GetMapping("/searchsamplesbystationid")
 //    public void searchbyuid(@RequestBody List<String> lis)
@@ -261,7 +258,7 @@ public class SampleController {
 //    		
 //    	}
 //    	}
-//    }
+    }
     @PostMapping("/searchsamplesbypatientid")
     public SampleList searchbypatientid(@RequestBody String uid )
     {
@@ -291,4 +288,34 @@ public class SampleController {
 		sampleList.setSampleBean(sampleBean1);
 		return sampleList;
     }
+    @PostMapping("/searchsamplesbystationid")
+	public SampleList searchbystationid(@RequestBody String stationid )
+	{
+   	 System.out.println(stationid);
+   	 System.out.println("hello station");
+   	 SampleList sampleList=new SampleList();
+//  null condition
+   	 if(stationid==null)
+   	 {
+   		 sampleList.setMessage("stationid is null");
+   		 sampleList.setStatus(0);
+   		 sampleList.setSampleBean(null);
+   		 return sampleList;
+   	 }
+   	 List<SampleBean> sampleBean1= this.sampleRepository.getbystationid(stationid);
+//   	 if uid is not found in the repo
+   	 if(sampleBean1.isEmpty()==true)
+   	 {
+   		 sampleList.setMessage("stationid not in repo");
+   		 sampleList.setStatus(0);
+   		 sampleList.setSampleBean(null);
+   		 return sampleList;
+   	 }
+   	 sampleList.setMessage("success");
+   	 sampleList.setStatus(1);
+//   	 SampleBean sampleBean2=sampleBean1.get();
+   	 sampleList.setSampleBean(sampleBean1);
+   	 return sampleList;
+	}
+
 }
