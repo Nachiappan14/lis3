@@ -84,8 +84,8 @@ public class UserController {
     	p.setTechnician_id(u.getTechnician_id());
     	p.setTechnician_password(u.getTechnician_password());
     	p.setTechnicianname(u.getTechnicianname());
-    	this.userRepository.delete(u);
-    	this.userRepository.save(p);
+//    	this.userRepository.delete(u);
+//    	this.userRepository.save(p);
     }
     @GetMapping("/getuserbyuser_id")
     public User getuserbyuser_id(String uid)
