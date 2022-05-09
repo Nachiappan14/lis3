@@ -1,5 +1,6 @@
 package demo.controller;
 
+import java.util.ArrayList;
 //import java.sql.Date;
 import java.util.Date;
 import java.io.IOException;
@@ -81,7 +82,7 @@ public class SampleController {
        Optional<PatientBean> p=this.patientRepository.findByuid(uid);
        PatientBean patient=p.get();
        LocalDateTime ld=LocalDateTime.now();
-       String sub=String.valueOf(ld)+uid;
+       String sub=String.valueOf(ld)+"$"+uid;
 //       String sub1=
        LocalDate lds=LocalDate.now();
 //       String sample_id, String test_name, String uid, String observations, String parent,
@@ -323,9 +324,15 @@ public class SampleController {
    	 return sampleList;
 	}
     @PostMapping("/showSamplesByDate")
-	public List<SampleBean> showSamplesByDate(@RequestBody LocalDate ld )
+	public List<String> showSamplesByDate(@RequestBody LocalDate ld )
 	{
-    	return this.sampleRepository.getbydate(ld);
+    	List<SampleBean> p= this.sampleRepository.getbydate(ld);
+    	List<String> res=new ArrayList<>();
+    	for(int i=0;i<p.size();i++)
+    	{
+    		res.add(p.get(i).getSample_id());
+    	}
+    	return res;
 	}
     @GetMapping("/countsamples")
     public String countsamples()
@@ -363,5 +370,19 @@ public class SampleController {
     {
     	SampleBean s=this.sampleRepository.findById(sample_id).get();
     	s.setStatus(s.getStatus()+1);
+    }
+    @PostMapping("/getsubsamplebysampleid")
+    public  List<SampleBean> getsubsamplebysampleid(@RequestBody String sample_id)
+    {
+    	List<SampleBean> arr=this.sampleRepository.getsamples();
+    	List<SampleBean> res= new ArrayList<>();
+    	for(int i=0;i<arr.size();i++)
+    	{
+    		if(arr.get(i).getSample_id().contains(sample_id))
+    		{
+    			res.add(arr.get(i));
+    		}
+    	}
+       return res;
     }
 }
