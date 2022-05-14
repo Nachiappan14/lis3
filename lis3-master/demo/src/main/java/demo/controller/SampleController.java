@@ -76,6 +76,7 @@ public class SampleController {
 		Integer quantity = csi.getQuantity();
 		String station_id = csi.getStationId();
 
+		System.out.println(uid+" "+sample_type+" "+quantity.toString()+" "+station_id);
     	Sample sample=new Sample();
 //    	if uid is null
     	if(uid==null)
