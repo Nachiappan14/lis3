@@ -49,6 +49,7 @@ import demo.model.SubSampleBean;
 import demo.repository.ReportRepository;
 import demo.repository.PatientRepository;
 import demo.repository.SampleRepository;
+import demo.model.createSampleInput;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -67,9 +68,14 @@ public class SampleController {
     }
     
     @PostMapping("/createsample")
-    public Sample createSample(@RequestBody String uid)
+    public Sample createSample(@RequestBody createSampleInput csi)
     {
-    	System.out.println(uid);
+    	// System.out.println(uid);
+		String uid = csi.getUid();
+		String sample_type = csi.getSampleType();
+		Integer quantity = csi.getQuantity();
+		String station_id = csi.getStationId();
+
     	Sample sample=new Sample();
 //    	if uid is null
     	if(uid==null)
@@ -89,7 +95,7 @@ public class SampleController {
 //   			String sample_type, int quantity, String status, String rs_technician_id, LocalDate rs_date,
 //   			String gs_technician_id, LocalDate gs_date, String as_technician_id, LocalDate as_date,
 //   			String vs_technician_id, LocalDate vs_date) 
-	   SampleBean sampleBean=new SampleBean(sub,patient.getTest_name(),uid,"1","","see",0,1,"",lds,"",lds,"",lds,"",lds,"1");
+	   SampleBean sampleBean=new SampleBean(sub,patient.getTest_name(),uid,"1","",sample_type,quantity,1,"",lds,"",lds,"",lds,"",lds,"1",station_id);
        sample.setMessage("success");
 	   sample.setStatus(1);
 	   sample.setSampleBean(sampleBean);
@@ -118,7 +124,7 @@ public class SampleController {
     		String sub=subSampleBean.getSample_id()+"$"+String.valueOf(i);
     		Optional<SampleBean> s1=this.sampleRepository.findById(subSampleBean.getSample_id());
     		SampleBean sampleBean1=s1.get();
-    		SampleBean subsample=new SampleBean(sub,sampleBean1.getTest_name(),sampleBean1.getUid(),sampleBean1.getObservations(),sampleBean1.getSample_id(),sampleBean1.getSample_type() ,sampleBean1.getQuantity(),sampleBean1.getStatus()+1,sampleBean1.getRs_technician_id() ,sampleBean1.getRs_date(),sampleBean1.getGs_technician_id() ,sampleBean1.getGs_date(),sampleBean1.getAs_technician_id(),sampleBean1.getAs_date(),sampleBean1.getVs_technician_id(),sampleBean1.getVs_date(),"1");
+    		SampleBean subsample=new SampleBean(sub,sampleBean1.getTest_name(),sampleBean1.getUid(),sampleBean1.getObservations(),sampleBean1.getSample_id(),sampleBean1.getSample_type() ,sampleBean1.getQuantity(),sampleBean1.getStatus()+1,sampleBean1.getRs_technician_id() ,sampleBean1.getRs_date(),sampleBean1.getGs_technician_id() ,sampleBean1.getGs_date(),sampleBean1.getAs_technician_id(),sampleBean1.getAs_date(),sampleBean1.getVs_technician_id(),sampleBean1.getVs_date(),"1","2");
     		this.sampleRepository.save(subsample);
     		sample.setMessage("success");
     		sample.setStatus(1);

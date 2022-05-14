@@ -32,6 +32,7 @@ public class SampleBean {
 	 private String vs_technician_id;
 	 private LocalDate vs_date;
 	 private String verified;
+	 private String station_id;
 	 public String getObservations() {
 		return observations;
 	}
@@ -47,7 +48,7 @@ public class SampleBean {
 		public SampleBean(String sample_id, String test_name, String uid, String observations, String parent,
 			String sample_type, int quantity, int status, String rs_technician_id, LocalDate ld,
 			String gs_technician_id, LocalDate ld2, String as_technician_id, LocalDate ld3,
-			String vs_technician_id, LocalDate ld4, String verified) {
+			String vs_technician_id, LocalDate ld4, String verified,String station_id) {
 		this.sample_id = sample_id;
 		this.test_name = test_name;
 		this.uid = uid;
@@ -65,6 +66,7 @@ public class SampleBean {
 		this.vs_technician_id = vs_technician_id;
 		this.vs_date = ld4;
 		this.verified=verified;
+		this.station_id=station_id;
 	}
 
 		public String getSample_id() {
@@ -194,5 +196,12 @@ public class SampleBean {
 		public void setVerified(String verified) {
 			this.verified = verified;
 		}
-	
+
+		public String getStationId(){
+			return this.station_id;
+		}
+
+		public void setStationId(String sid){
+			this.station_id = sid;
+		}
 }
