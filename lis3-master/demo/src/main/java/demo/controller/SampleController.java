@@ -72,9 +72,9 @@ public class SampleController {
     {
     	// System.out.println(uid);
 		String uid = csi.getUid();
-		String sample_type = csi.getSampleType();
+		String sample_type = csi.getSample_type();
 		Integer quantity = csi.getQuantity();
-		String station_id = csi.getStationId();
+		String station_id = csi.getStation_id();
 
 		System.out.println(uid+" "+sample_type+" "+quantity.toString()+" "+station_id);
     	Sample sample=new Sample();

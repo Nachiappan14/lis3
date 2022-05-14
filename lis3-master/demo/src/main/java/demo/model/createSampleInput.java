@@ -9,29 +9,32 @@ public class createSampleInput {
 	public String getUid() {
 		return this.uid;
 	}
+
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
 	
-	public String getSampleType(){
-		return sample_type;
+	public String getSample_type(){
+		return this.sample_type;
 	}
-	public void setSampleType(sample_type){
-		this.sample_type=sample_type;
+
+	public void setSample_type(String stp){
+		this.sample_type=stp;
 	}
 	
 	public Integer getQuantity() {
 		return this.quantity;
 	}
+
 	public void setQuantity(Integer number) {
 		this.quantity = number;
 	}
 
-	public String getStationId(){
+	public String getStation_id(){
 		return this.station_id;
 	}
 
-	public void setStationId(String sid){
+	public void setStation_id(String sid){
 		this.station_id = sid;
 	}
 }
