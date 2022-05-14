@@ -125,7 +125,7 @@ public class SampleController {
     		String sub=subSampleBean.getSample_id()+"$"+String.valueOf(i);
     		Optional<SampleBean> s1=this.sampleRepository.findById(subSampleBean.getSample_id());
     		SampleBean sampleBean1=s1.get();
-    		SampleBean subsample=new SampleBean(sub,sampleBean1.getTest_name(),sampleBean1.getUid(),sampleBean1.getObservations(),sampleBean1.getSample_id(),subsampleBean.getSample_type() ,sampleBean1.getQuantity()/subsampleBean.getNumber(),sampleBean1.getStatus()+1,sampleBean1.getRs_technician_id() ,sampleBean1.getRs_date(),sampleBean1.getGs_technician_id() ,sampleBean1.getGs_date(),sampleBean1.getAs_technician_id(),sampleBean1.getAs_date(),sampleBean1.getVs_technician_id(),sampleBean1.getVs_date(),"1",subsampleBean.getStation_id());
+    		SampleBean subsample=new SampleBean(sub,sampleBean1.getTest_name(),sampleBean1.getUid(),sampleBean1.getObservations(),sampleBean1.getSample_id(),subSampleBean.getSample_type() ,sampleBean1.getQuantity()/subSampleBean.getNumber(),sampleBean1.getStatus()+1,sampleBean1.getRs_technician_id() ,sampleBean1.getRs_date(),sampleBean1.getGs_technician_id() ,sampleBean1.getGs_date(),sampleBean1.getAs_technician_id(),sampleBean1.getAs_date(),sampleBean1.getVs_technician_id(),sampleBean1.getVs_date(),"1",subSampleBean.getStation_id());
     		this.sampleRepository.save(subsample);
     		sample.setMessage("success");
     		sample.setStatus(1);

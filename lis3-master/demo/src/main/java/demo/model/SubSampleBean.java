@@ -8,11 +8,11 @@ public class SubSampleBean {
    	private Integer quantity;
 	private String station_id;
 	
-	public String getSampleType(){
+	public String getSample_type(){
 		return this.sample_type;
 	}
 
-	public void setSampleType(sample_type){
+	public void setSample_type(String sample_type){
 		this.sample_type=sample_type;
 	}
 	
@@ -23,11 +23,11 @@ public class SubSampleBean {
 		this.quantity = number;
 	}
 
-	public String getStationId(){
+	public String getStation_id(){
 		return this.station_id;
 	}
 
-	public void setStationId(String sid){
+	public void setStation_id(String sid){
 		this.station_id = sid;
 	}
 
